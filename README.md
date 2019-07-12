@@ -45,7 +45,7 @@ Type ./pcudaSAT -h to list the different options.
 * José M. Cecilia, José M. García, Ginés D. Guerrero, Miguel A. Martínez-del-Amor, Mario J. Pérez-Jiménez, Manuel Ujaldón. **P Systems Simulations on Massively Parallel Architectures**, *19th Intl. Conference on Parallel Architectures and Compilation Techniques (PACT'10)*, September 2010, Viena, Austria, (2010).
 * José M. Cecilia, Ginés D. Guerrero, José M. García, Miguel Á. Martínez-del-Amor, Mario J. Pérez-Jiménez, Manuel Ujaldón. **Enhancing the Simulation of P Systems for the SAT Problem on GPUs**, *Symposium on Application Accelerators in High Performance Computing*, July 2010, Knoxville, USA, (2010).
 
-### 3.3 Ph.D. Thesis###
+### 3.3 Ph.D. Thesis ###
 
 * Miguel Á. Martínez-del-Amor. [Accelerating Membrane Systems Simulators using High Performance Computing with GPU.](http://www.cs.us.es/~mdelamor/research.html#thesis) May 2013, University of Seville. Advised by Mario J. Pérez-Jiménez and Ignacio Pérez-Hurtado.
 * José M. Cecilia. The GPU as a Processor for Novel Computation: Analysis and Contributions. 2011, University of Murcia. Advised by J.M. García and M. Ujaldón.
