@@ -53,7 +53,7 @@ Type ./pcudaSAT -h to list the different options.
 ----------
 ## 4. Downloads ##
 
-[Link to PCUDASAT Files](http://sourceforge.net/projects/pmcgpu/files/PCUDASAT/)
+[Link to PCUDASAT Files](https://github.com/miguelamda/counterslib)
 
 [Required Counterslib library](http://sourceforge.net/projects/pmcgpu/files/counterslib)
 
