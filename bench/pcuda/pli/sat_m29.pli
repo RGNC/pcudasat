@@ -1,0 +1,94 @@
+/* 
+  * SAT.pli:
+  * This P-Lingua program defines a family of recognizer P systems 
+  * to solve the SAT problem.
+  *
+  * For more information about P-Lingua see http://www.gcn.us.es/plingua.htm
+  *
+  * Copyright (C) 2008  Ignacio Perez-Hurtado (perezh@us.es)
+  *                     Research Group On Natural Computing
+  *                     http://www.gcn.us.es
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+  */
+
+@model<membrane_division>
+
+def Sat(m,n)
+{
+ /* Initial configuration */
+ @mu = [[]'2]'1;
+
+ /* Initial multisets */
+ @ms(2) = d{1};
+
+ /* Set of rules */
+ [d{k}]'2 --> +[d{k}]-[d{k}] : 1 <= k <= n;
+
+ {
+  +[x{i,1} --> r{i,1}]'2;
+  -[nx{i,1} --> r{i,1}]'2;
+  -[x{i,1} --> #]'2;
+  +[nx{i,1} --> #]'2;
+ } : 1 <= i <= m;
+
+ {
+  +[x{i,j} --> x{i,j-1}]'2;
+  -[x{i,j} --> x{i,j-1}]'2;
+  +[nx{i,j} --> nx{i,j-1}]'2;
+  -[nx{i,j} --> nx{i,j-1}]'2;
+ } : 1<=i<=m, 2<=j<=n;
+
+ {
+  +[d{k}]'2 --> []d{k};
+  -[d{k}]'2 --> []d{k};
+ } : 1<=k<=n;
+
+ d{k}[]'2 --> [d{k+1}] : 1<=k<=n-1;
+ [r{i,k} --> r{i,k+1}]'2 : 1<=i<=m, 1<=k<=2*n-1;
+ [d{k} --> d{k+1}]'1 : n <= k<= 3*n-3;
+ [d{3*n-2} --> d{3*n-1},e]'1;
+ e[]'2 --> +[c{1}];
+ [d{3*n-1} --> d{3*n}]'1;
+ [d{k} --> d{k+1}]'1 : 3*n <= k <= 3*n+2*m+2;
+ +[r{1,2*n}]'2 --> -[]r{1,2*n};
+ -[r{i,2*n} --> r{i-1,2*n}]'2 : 1<= i <= m;
+ r{1,2*n}-[]'2 --> +[r{0,2*n}];
+ -[c{k} --> c{k+1}]'2 : 1<=k<=m;
+ +[c{m+1}]'2 --> +[]c{m+1};
+ [c{m+1} --> c{m+2},t]'1;
+ [t]'1 --> +[]t;
+ +[c{m+2}]'1 --> -[]Yes;
+ [d{3*n+2*m+3}]'1 --> +[]No;
+
+} /* End of Sat module */
+
+/* Main module */
+def main()
+{
+ /* Call to Sat module for m=2 and n=16 */
+ 
+  call Sat(32,17);
+ 
+ /* Expansion of the input multiset */
+ 
+ @ms(2) += x{1,4},nx{1,5},x{1,6},x{1,7},x{1,10},nx{1,15},nx{1,16},nx{1,17},x{2,1},nx{2,2},x{2,4},nx{2,6},nx{2,8},x{2,13},nx{2,16},nx{2,17},x{3,2},x{3,4},nx{3,5},nx{3,11},x{3,12},x{3,13},nx{3,15},nx{3,17},x{4,1},x{4,4},x{4,5},nx{4,9},x{4,11},nx{4,13},nx{4,14},nx{4,17},nx{5,2},nx{5,3},x{5,4},nx{5,6},nx{5,8},nx{5,13},nx{5,14},nx{5,17},nx{6,3},nx{6,6},x{6,7},x{6,8},x{6,11},x{6,13},x{6,14},nx{6,17},nx{7,4},x{7,5},x{7,7},x{7,9},x{7,14},x{7,15},x{7,16},nx{7,17},x{8,1},nx{8,4},nx{8,5},nx{8,7},nx{8,11},x{8,14},nx{8,15},nx{8,16},x{9,1},nx{9,5},x{9,8},nx{9,9},x{9,14},nx{9,15},nx{9,16},x{9,17},nx{10,4},x{10,5},x{10,6},x{10,12},nx{10,13},x{10,15},nx{10,16},x{10,17},x{11,2},x{11,3},nx{11,4},x{11,5},x{11,9},nx{11,10},x{11,14},nx{11,16},nx{12,1},nx{12,2},x{12,7},nx{12,8},x{12,11},x{12,13},x{12,15},nx{12,16},x{13,1},x{13,3},nx{13,4},x{13,7},x{13,8},x{13,10},x{13,14},nx{13,16},nx{14,7},x{14,8},nx{14,9},nx{14,11},nx{14,13},nx{14,14},nx{14,15},x{14,17},nx{15,3},x{15,5},nx{15,7},x{15,9},nx{15,10},nx{15,12},nx{15,15},x{15,16},x{16,2},nx{16,6},x{16,8},nx{16,11},x{16,14},nx{16,15},x{16,16},x{16,17},nx{17,1},x{17,3},nx{17,4},nx{17,7},x{17,8},x{17,9},x{17,11},nx{17,15},x{18,1},x{18,2},x{18,4},x{18,7},nx{18,11},nx{18,12},nx{18,14},x{18,15},nx{19,3},nx{19,4},nx{19,9},nx{19,10},nx{19,11},x{19,12},nx{19,14},x{19,15},nx{20,1},nx{20,3},x{20,4},x{20,5},nx{20,6},nx{20,8},nx{20,14},x{20,16},x{21,1},nx{21,3},x{21,7},x{21,11},nx{21,12},nx{21,13},x{21,14},x{21,16},x{22,1},nx{22,4},x{22,6},x{22,9},nx{22,11},nx{22,13},x{22,14},x{22,17},nx{23,1},x{23,4},x{23,6},nx{23,11},x{23,12},nx{23,13},x{23,14},x{23,16},x{24,1},x{24,2},nx{24,3},nx{24,10},x{24,12},nx{24,13},x{24,15},x{24,16},x{25,2},x{25,3},nx{25,4},x{25,6},x{25,11},nx{25,13},x{25,14},x{25,16},x{26,1},x{26,3},x{26,6},x{26,9},x{26,11},x{26,12},nx{26,13},x{26,14},x{27,2},nx{27,5},nx{27,7},nx{27,8},x{27,9},x{27,10},nx{27,11},nx{27,12},nx{28,2},nx{28,3},nx{28,7},x{28,8},nx{28,9},nx{28,10},nx{28,12},x{28,17},x{29,1},nx{29,6},nx{29,7},x{29,8},nx{29,9},nx{29,12},x{29,16},x{29,17},nx{30,1},x{30,5},nx{30,6},x{30,7},nx{30,9},x{30,10},nx{30,12},x{30,17},nx{31,1},x{31,2},x{31,3},nx{31,6},x{31,8},x{31,9},x{31,16},x{31,17},x{32,1},nx{32,2},x{32,4},x{32,5},x{32,8},x{32,12},x{32,13},x{32,15};
+
+;
+ 
+ /* To define another P system of the family, call the Sat module with other parameters and 
+    expand the input multiset with other values */
+    
+} /* End of main module */
+

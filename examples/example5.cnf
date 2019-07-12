@@ -1,0 +1,6 @@
+c  a simple example
+c
+p cnf 3 3
+  -1   -2    -3  0
+  -1    -2  0
+  -2    -3  0

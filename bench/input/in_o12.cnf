@@ -1,0 +1,4 @@
+c random clauses
+p cnf 11 2
+-8 1 6 11 0
+-4 6 7 8 0
